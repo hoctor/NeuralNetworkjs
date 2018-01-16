@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rede Neural</title>
+  <script src="jquery-2.1.1.js"></script>
+  <script src="MultiLayerPerceptron.js"></script>
+  <textarea id="json" style="width:700px;height:500px"></textarea>
+  <script>
+      
+      $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "dadosHoje.csv",
+            dataType: "text",
+            success: function(data) {processData(data);}
+         });
+    });
+    
+    function processData(allText) {
+        var record_num = 5;  // numero de elementos por linha
+        var allTextLines = allText.split(/\r\n|\n/); //quebra linhas
+        var entries = allTextLines[1].split(';'); 
+        var lines = [];
+        var headings = entries.splice(0,record_num);//adiciona nas posições {0,1,2,3,4}   
+        var headers = allTextLines[0].split(';');
+    
+          for (var i=1; i<allTextLines.length; i++) {
+              var data = allTextLines[i].split(';');
+              if (data.length == headers.length) {
+      
+                  var tarr = [];
+                  for (var j=0; j<headers.length; j++) {
+                      tarr.push(headers[j]+":"+data[j]);
+                      
+                  }
+                  lines.push(tarr);
+              }
+              //console.log(data);
+              var shift = data[1];
+              var shift2 = data[2];
+              var hora = data[0];
+              var output2 = bpn.Run([shift,shift2]);
+              console.log(output2);
+
+                                            
+            /*  var output1 = [];
+              var tinker = 0;
+              tinker++ 
+              output1[i] = bpn.Run([shift,shift2]);
+              var output =+ output1[i];
+              console.log(output);   */
+          }
+  
+          return;
+    }
+    
+                         //conexão                       
+    /*function download_csv(output, tinker) {
+        var csv = 'OUTPUT RNA';
+        
+        tinker.forEach(function(row) {
+        //for(var i = 0 ; i < tinker ; i++){  
+                csv += row.join();
+                csv += "\n";
+        
+        });
+        console.log(csv);
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'outputRNA.csv';
+        hiddenElement.click();
+      }*/
+    
+      var training_sets = [
+        { input:[25,0], output: [0]},
+        { input: [50, 0], output: [0] },
+        { input: [75, 0], output: [0] },
+        { input: [100, 0], output: [0] },
+        { input:[25,1], output: [1] },
+        { input: [50, 1], output: [1] },
+        { input: [75, 1], output: [1] },
+        { input: [100, 1], output: [1] },
+        { input:[25,25], output: [1]},
+        { input: [50, 25], output: [1] },
+        { input: [75, 25], output: [1] },
+        { input: [100, 25], output: [1] },
+        { input:[25,50], output: [1]},
+        { input: [50, 50], output: [1] },
+        { input: [75, 50], output: [1] },
+        { input: [100, 50], output: [1] },
+        { input:[25,75], output: [1]},
+        { input: [50, 75], output: [1] },
+        { input: [75, 75], output: [1] },
+        { input: [100, 75], output: [1] },
+        { input:[25,100], output: [1]}, 
+        { input: [50, 100], output: [1] },
+        { input: [75, 100], output: [1] },
+        { input: [100, 100], output: [1] },
+      ];
+    
+      var layerSizes = [2, 8, 5, 1];
+      var aFuncs = [ActivationFunction.None, ActivationFunction.RationalSigmoid,ActivationFunction.Sigmoid, ActivationFunction.Linear];
+    
+      var bpn = new MultiLayerPerceptron();
+      bpn.init(layerSizes, aFuncs);
+      bpn.Train(training_sets, 100000);
+      bpn.ToJson("json");
+      //console.log(bpn.Run([1, 1]));
+    
+    </script>  
+</head>
+<body>
+    <button onclick="download_csv()">Download CSV</button>
+</body>
+</html>
