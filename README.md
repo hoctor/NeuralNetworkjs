@@ -12,10 +12,10 @@ hands on it,so i freely did what I want with the code.
 
 
 steps:
-1- build any HTTP-server , you can do it as you like
-2- run it
-3- you can change HTML file for training
-4- to much epochs may take some time to process
+1- build any HTTP-server , you can do it as you like /n
+2- run it /n
+3- you can change HTML file for training /n
+4- too much epochs may take some time to process
 
 Thanks
 any doubt contact me
