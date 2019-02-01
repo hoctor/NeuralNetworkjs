@@ -1,7 +1,7 @@
 # NeuralNetworkjs
 
 This is a Multilayer perceptron used to build and app that stores and calculate sleeping behavior.
-You can build and HTTP-server and run it.
+You can build an HTTP-server and run it.
 obs:I dont know what version is this,cause i did so much work and so many versions of it.I followed a book of a Brazilian autor
 but you can build it on your own with any book,video,blog you find.
 
